@@ -20,6 +20,15 @@ public class RacesController {
 		return new RacesListDAO(races);
 	}
 	
+	@GetMapping("/races/id")
+	public Race getRaceById(@RequestParam int id) {
+		Race race = racesRespository.getRaceById(id);
+		if(race == null) {
+			race = new Race();
+		}
+		return race;
+	}
+	
 	@GetMapping("/races/distance")
 	public RacesListDAO getRacesWithDistanceRange(@RequestParam double from, @RequestParam double to) {
 		List<Race> races = racesRespository.getRacesWithDistanceRange(from, to);
