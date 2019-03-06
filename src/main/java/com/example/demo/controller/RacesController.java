@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,15 @@ public class RacesController {
 	@GetMapping("/races/distance")
 	public RacesListDAO getRacesWithDistanceRange(@RequestParam double from, @RequestParam double to) {
 		List<Race> races = racesRespository.getRacesWithDistanceRange(from, to);
+		return new RacesListDAO(races);
+	}
+	
+	@GetMapping("/races/ongoing")
+	public RacesListDAO getOngoingRaces() {
+		List<Race> races = racesRespository.getOngoingRaces();
+		if(races == null) {
+			races = new ArrayList<Race>();
+		}
 		return new RacesListDAO(races);
 	}
 }
