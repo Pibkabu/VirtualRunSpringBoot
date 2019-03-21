@@ -29,4 +29,9 @@ public interface PlayerRespository extends JpaRepository<Player, UserAndRaceMape
 	@Modifying
 	@Query(value = "INSERT INTO Player(UserId, RaceId) VALUES(:userId,:raceId)", nativeQuery = true)
 	void playerRegister(@Param("userId") int userId, @Param("raceId") int raceId);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "DELETE FROM Player where userId = :userId and raceId = :raceId", nativeQuery = true)
+	void cancelRegister(@Param("userId") int userId, @Param("raceId") int raceId);
 }

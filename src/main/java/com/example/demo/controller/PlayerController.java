@@ -57,4 +57,16 @@ public class PlayerController {
 		}
 		return player;
 	}
+	
+	@RequestMapping(value = "/players/register/cancel", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public @ResponseBody Player cancelRegister(String paticipant) {
+		Gson gson = new Gson();
+		Player player = gson.fromJson(paticipant, Player.class);
+		if(player != null) {
+			playerRespository.cancelRegister(player.getUserAndRaceMaped().getUserId(), player.getUserAndRaceMaped().getRaceId());
+		}else {
+			player = new Player();
+		}
+		return player;
+	}
 }
