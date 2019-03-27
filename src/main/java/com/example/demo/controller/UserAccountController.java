@@ -36,7 +36,12 @@ public class UserAccountController {
 	
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public @ResponseBody UserAccount addUserAccount(String email, String password) {
-		userRespository.addAnotherUserAccount(email, password);
+		UserAccount account = new UserAccount();
+		account.setEmail(email);
+		account.setPassword(password);
+		//userRespository.addAnotherUserAccount(email, password); 
+		userRespository.save(account);
+		System.out.println(account.getUserId());
 		return userRespository.getUserAccountByEmail(email);
 	}
 	

@@ -1,10 +1,14 @@
 package com.example.demo.respository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.demo.model.Race;
 
 public interface RacesRespository extends JpaRepository<Race, Integer>{
@@ -20,4 +24,9 @@ public interface RacesRespository extends JpaRepository<Race, Integer>{
 	
 	@Query(value = "SELECT * FROM Race where EndTime > CURDATE()", nativeQuery = true)
 	List<Race> getOngoingRaces();
+	
+	@Transactional
+	@Modifying
+	@Query(value = "INSERT INTO Race(CreateTime, StartTime, EndTime, RaceName, Distance, Regulation, `Description`, RaceImage) VALUE(?1,?2,?3,?4,?5,?6,?7,?8)", nativeQuery = true)
+	void createRace(Timestamp createTime, Timestamp startTime, Timestamp endTime, String raceName, double Distance, String Regulation, String Description, String RaceImage);
 }

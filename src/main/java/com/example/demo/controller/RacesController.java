@@ -2,18 +2,27 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dao.RacesListDAO;
 import com.example.demo.model.Race;
+import com.example.demo.respository.HostingRespository;
 import com.example.demo.respository.RacesRespository;
+import com.google.gson.Gson;
 
 @RestController
 public class RacesController {
 	@Autowired
 	RacesRespository racesRespository;
+	 
+	@Autowired
+	HostingRespository hostRespository;
 	
 	@GetMapping("/races")
 	public RacesListDAO getAllRaces() {
@@ -43,5 +52,15 @@ public class RacesController {
 			races = new ArrayList<Race>();
 		}
 		return new RacesListDAO(races);
+	}
+	
+	@RequestMapping(value = "/races/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public @ResponseBody Race createRace(String raceJson1, String userId) {
+		Gson gson = new Gson();
+		Race race = gson.fromJson(raceJson1, Race.class);
+		//racesRespository.createRace(race.getCreateTime(), race.getStartTime(), race.getEndTime(), race.getName(), race.getDistance(), race.getRegulation(), race.getDescription(), race.getRaceImage());
+		racesRespository.save(race);
+		hostRespository.addHosting(Integer.valueOf(userId), race.getRaceId());
+		return race;
 	}
 }

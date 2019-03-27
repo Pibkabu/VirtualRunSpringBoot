@@ -4,11 +4,14 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Race {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int raceId;
 	
     private Timestamp createTime;
@@ -28,6 +31,8 @@ public class Race {
     
     private int totalPlayer;
     
+    private String raceImage;
+    
 	public Race() {
 		
 	}
@@ -45,7 +50,21 @@ public class Race {
 		this.description = description;
 		this.totalPlayer = totalPlayer;
 	}
-
+	
+	public Race(int raceId, Timestamp createTime, Timestamp startTime, Timestamp endTime, String name, double distance,
+			String regulation, String description, int totalPlayer, String raceImage) {
+		super();
+		this.raceId = raceId;
+		this.createTime = createTime;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.name = name;
+		this.distance = distance;
+		this.regulation = regulation;
+		this.description = description;
+		this.totalPlayer = totalPlayer;
+		this.raceImage = raceImage;
+	}
 
 
 	public int getRaceId() {
@@ -102,6 +121,17 @@ public class Race {
 	public void setTotalPlayer(int totalPlayer) {
 		this.totalPlayer = totalPlayer;
 	}
+
+
+	public String getRaceImage() {
+		return raceImage;
+	}
+
+
+	public void setRaceImage(String raceImage) {
+		this.raceImage = raceImage;
+	}
     
+	
     
 }
