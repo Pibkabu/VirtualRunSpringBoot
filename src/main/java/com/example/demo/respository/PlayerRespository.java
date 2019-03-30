@@ -25,6 +25,9 @@ public interface PlayerRespository extends JpaRepository<Player, UserAndRaceMape
 	@Query(value = "SELECT * FROM Player where raceId = :raceId", nativeQuery = true)
 	List<Player> getRaceParticipants(@Param("raceId") int raceId);
 	
+	@Query(value = "SELECT * FROM Player where raceId = :raceId where TravelTime > 0 order by TravelTime ASC", nativeQuery = true)
+	List<Player> getRaceFinishedParticipants(@Param("raceId") int raceId);
+	
 	@Transactional
 	@Modifying
 	@Query(value = "INSERT INTO Player(UserId, RaceId) VALUES(:userId,:raceId)", nativeQuery = true)
@@ -34,4 +37,14 @@ public interface PlayerRespository extends JpaRepository<Player, UserAndRaceMape
 	@Modifying
 	@Query(value = "DELETE FROM Player where userId = :userId and raceId = :raceId", nativeQuery = true)
 	void cancelRegister(@Param("userId") int userId, @Param("raceId") int raceId);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE Player set TravelTime = ?1, TravelDistance = ?2 where UserId = ?3 and RaceId = ?4", nativeQuery = true)
+	void sendResult(double travelTime, double travelDistance, int userId, int raceId );
+	
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE Player set RankInRace = :rankInRace where UserId = :userId and RaceId = :raceId", nativeQuery = true)
+	void updateRanking(@Param("rankInRace") int rankInRace, @Param("userId") int userId, @Param("raceId") int raceId);
 }
