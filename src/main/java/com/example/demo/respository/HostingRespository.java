@@ -20,4 +20,19 @@ public interface HostingRespository extends JpaRepository<UserHost, UserAndRaceM
 	@Modifying
 	@Query(value = "INSERT INTO UserHost values(:userId, :raceId)", nativeQuery = true)
 	void addHosting(@Param("userId") int userId, @Param("raceId") int raceId);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "DELETE from UserHost where RaceId = :raceId", nativeQuery = true)
+	void deleteHosting(@Param("raceId") int raceId);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "DELETE from Player where RaceId = :raceId", nativeQuery = true)
+	void deleteParticipants(@Param("raceId") int raceId);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "DELETE from Race where RaceId = :raceId", nativeQuery = true)
+	void deleteRace(@Param("raceId") int raceId);
 }

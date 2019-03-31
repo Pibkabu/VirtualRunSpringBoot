@@ -5,14 +5,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dao.RacesListDAO;
 import com.example.demo.model.Race;
+import com.example.demo.model.UserAndRaceMaped;
 import com.example.demo.model.UserHost;
 import com.example.demo.respository.HostingRespository;
 import com.example.demo.respository.RacesRespository;
@@ -68,5 +72,16 @@ public class HostingController {
 			}
 		}
 		return new RacesListDAO(races);
+	}
+	
+	@RequestMapping(value = "/hosting/cancel", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public @ResponseBody UserHost cancelHosting(String raceId) {
+		int id = Integer.valueOf(raceId);
+		hostingRespository.deleteParticipants(id);
+		hostingRespository.deleteHosting(id);
+		hostingRespository.deleteRace(id);
+		UserHost host = new UserHost();
+		host.setUserAndRaceMaped(new UserAndRaceMaped());
+		return host;
 	}
 }

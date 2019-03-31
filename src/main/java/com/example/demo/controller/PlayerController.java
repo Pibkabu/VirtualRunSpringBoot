@@ -108,6 +108,9 @@ public class PlayerController {
 				List<Player> participants = playerRespository.getRaceFinishedParticipants(player.getUserAndRaceMaped().getRaceId());
 				if(!participants.isEmpty()) {
 					for (int i = 0; i < participants.size(); i++) {
+						if(participants.get(i).getUserAndRaceMaped().getUserId() == player.getUserAndRaceMaped().getUserId()) {
+							player.setRankInRace(i+1);
+						}
 						playerRespository.updateRanking((i+1), participants.get(i).getUserAndRaceMaped().getUserId(),
 								participants.get(i).getUserAndRaceMaped().getRaceId());
 					}

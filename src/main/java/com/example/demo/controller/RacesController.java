@@ -63,4 +63,17 @@ public class RacesController {
 		hostRespository.addHosting(Integer.valueOf(userId), race.getRaceId());
 		return race;
 	}
+	
+	@RequestMapping(value = "/races/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public @ResponseBody Race editRaceInfo(String raceJson) {
+		Gson gson = new Gson();
+		Race race = gson.fromJson(raceJson, Race.class);
+		if(race != null) {
+			racesRespository.editRaceInfo(race.getStartTime(), race.getEndTime(), race.getName(), 
+					race.getDistance(), race.getRegulation(), race.getDescription(), race.getRaceId());
+		}else {
+			race = new Race();
+		}
+		return race;
+	}
 }

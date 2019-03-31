@@ -27,6 +27,6 @@ public interface RacesRespository extends JpaRepository<Race, Integer>{
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO Race(CreateTime, StartTime, EndTime, RaceName, Distance, Regulation, `Description`, RaceImage) VALUE(?1,?2,?3,?4,?5,?6,?7,?8)", nativeQuery = true)
-	void createRace(Timestamp createTime, Timestamp startTime, Timestamp endTime, String raceName, double Distance, String Regulation, String Description, String RaceImage);
+	@Query(value = "UPDATE Race SET StartTime = ?1, EndTime = ?2, RaceName = ?3, Distance = ?4, Regulation = ?5, `Description` = ?6 where raceId = ?7)", nativeQuery = true)
+	void editRaceInfo(Timestamp startTime, Timestamp endTime, String raceName, double distance, String regulation, String description, int raceId);
 }
