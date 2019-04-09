@@ -1,6 +1,10 @@
 package com.example.demo.controller;
+import java.io.FileOutputStream;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,9 +62,21 @@ public class RacesController {
 	public @ResponseBody Race createRace(String raceJson1, String userId) {
 		Gson gson = new Gson();
 		Race race = gson.fromJson(raceJson1, Race.class);
-		//racesRespository.createRace(race.getCreateTime(), race.getStartTime(), race.getEndTime(), race.getName(), race.getDistance(), race.getRegulation(), race.getDescription(), race.getRaceImage());
+		String imageString = race.getRaceImage();
+		race.setRaceImage("");
 		racesRespository.save(race);
 		hostRespository.addHosting(Integer.valueOf(userId), race.getRaceId());
+		try{
+			String imageName = "Race" + race.getRaceId() + ".jpg";
+			FileOutputStream fos = new FileOutputStream("C:\\Users\\quynh\\eclipse-workspace\\FirstRestFulService\\image_race\\" + imageName);
+			byte byteArray[] = Base64.decodeBase64(imageString);
+			fos.write(byteArray);
+			fos.close();
+			racesRespository.editRaceImage("http://192.168.1.168:8080/image_race/" + imageName, race.getRaceId());
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		return race;
 	}
 	
