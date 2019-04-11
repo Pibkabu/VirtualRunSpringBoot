@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 import java.io.FileOutputStream;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +71,7 @@ public class RacesController {
 			byte byteArray[] = Base64.decodeBase64(imageString);
 			fos.write(byteArray);
 			fos.close();
-			racesRespository.editRaceImage("http://192.168.1.168:8080/image_race/" + imageName, race.getRaceId());
+			racesRespository.editRaceImage("http://192.168.43.195:8080/image_race/" + imageName, race.getRaceId());
 		}
 		catch(Exception e){
 			e.printStackTrace();

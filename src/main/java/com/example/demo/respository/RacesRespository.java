@@ -22,7 +22,7 @@ public interface RacesRespository extends JpaRepository<Race, Integer>{
 	@Query(value = "SELECT * FROM Race where distance >= :from and distance <= :to", nativeQuery = true)
 	List<Race> getRacesWithDistanceRange(@Param("from") double fromDistance, @Param("to") double toDistance);
 	
-	@Query(value = "SELECT * FROM Race where EndTime > CURDATE()", nativeQuery = true)
+	@Query(value = "SELECT * FROM Race where EndTime > CURDATE() order by RaceId DESC", nativeQuery = true)
 	List<Race> getOngoingRaces();
 	
 	@Transactional
