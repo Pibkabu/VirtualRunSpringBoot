@@ -30,6 +30,9 @@ public class RacesController {
 	@GetMapping("/races")
 	public RacesListDAO getAllRaces() {
 		List<Race> races = racesRespository.getAllRaces();
+		if(races == null) {
+			races = new ArrayList<>();
+		}
 		return new RacesListDAO(races);
 	}
 	

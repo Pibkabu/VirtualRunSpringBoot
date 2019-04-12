@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dao.UserAccountDAO;
 import com.example.demo.model.UserAccount;
 import com.example.demo.respository.UserAccountRespository;
 
@@ -21,8 +23,12 @@ public class UserAccountController {
 	UserAccountRespository userRespository;
 	
 	@GetMapping("/user")
-	public List<UserAccount> getAllUserAccount(){
-		return userRespository.findAll();
+	public UserAccountDAO getAllUserAccount(){
+		List<UserAccount> accounts = userRespository.findAll();
+		if(accounts == null) {
+			accounts = new ArrayList<>();
+		}
+		return new UserAccountDAO(accounts);
 	}
 	
 	@GetMapping("/user/email")

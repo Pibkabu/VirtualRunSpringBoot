@@ -19,6 +19,8 @@ public class UserAccount {
 	@Column(name = "UserPassword")
 	private String password;
 	
+	private boolean accountRole;
+	
 	public UserAccount() {
 		
 	}
@@ -47,6 +49,14 @@ public class UserAccount {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isAccountRole() {
+		return accountRole;
+	}
+
+	public void setAccountRole(boolean accountRole) {
+		this.accountRole = accountRole;
 	}
 	
 }
