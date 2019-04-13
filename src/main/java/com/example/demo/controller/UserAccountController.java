@@ -24,7 +24,7 @@ public class UserAccountController {
 	
 	@GetMapping("/user")
 	public UserAccountDAO getAllUserAccount(){
-		List<UserAccount> accounts = userRespository.findAll();
+		List<UserAccount> accounts = userRespository.getAllUserAccountINeed();
 		if(accounts == null) {
 			accounts = new ArrayList<>();
 		}

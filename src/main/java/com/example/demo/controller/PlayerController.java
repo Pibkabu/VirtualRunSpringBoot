@@ -70,6 +70,15 @@ public class PlayerController {
 		return new PlayerListDAO(players);
 	}
 	
+	@GetMapping("/players/race/finish")
+	public PlayerListDAO getFinishResult(@RequestParam int raceId) {
+		List<Player> players = playerRespository.getFinishResult(raceId);
+		if(players == null) {
+			players = new ArrayList<Player>();
+		}
+		return new PlayerListDAO(players);
+	}
+	
 	@RequestMapping(value = "/players/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public @ResponseBody Player playerRegister(String paticipant) {
 		Gson gson = new Gson();

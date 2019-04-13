@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import com.example.demo.model.Donation;
 
 public interface DonationRepository extends JpaRepository<Donation, Integer>{
-	@Query(value = "SELECT * FROM Donation where raceId = :raceId order by DonationId DESC", nativeQuery = true)
+	@Query(value = "SELECT * FROM donation where RaceId = :raceId order by DonationId DESC", nativeQuery = true)
 	List<Donation> getRaceDonation(@Param("raceId") int raceId);
 }

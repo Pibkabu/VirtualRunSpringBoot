@@ -13,38 +13,41 @@ import com.example.demo.model.UserAndRaceMaped;
 
 public interface PlayerRespository extends JpaRepository<Player, UserAndRaceMaped>{
 	
-	@Query(value = "SELECT * FROM Player", nativeQuery = true)
+	@Query(value = "SELECT * FROM player", nativeQuery = true)
 	List<Player> getAllPlayers();
 	
-	@Query(value = "SELECT * FROM Player where userId = :userId", nativeQuery = true)
+	@Query(value = "SELECT * FROM player where UserId = :userId", nativeQuery = true)
 	List<Player> getPlayerWithId(@Param("userId") int userId);
 	
-	@Query(value = "SELECT * FROM Player where userId = :userId and raceId = :raceId", nativeQuery = true)
+	@Query(value = "SELECT * FROM player where UserId = :userId and RaceId = :raceId", nativeQuery = true)
 	Player getPlayerWithUserIdAndRaceId(@Param("userId") int userId, @Param("raceId") int raceId);
 	
-	@Query(value = "SELECT * FROM Player where raceId = :raceId", nativeQuery = true)
+	@Query(value = "SELECT * FROM player where RaceId = :raceId", nativeQuery = true)
 	List<Player> getRaceParticipants(@Param("raceId") int raceId);
 	
-	@Query(value = "SELECT * FROM Player where raceId = :raceId where TravelTime > 0 order by TravelTime ASC", nativeQuery = true)
+	@Query(value = "SELECT * FROM player where RaceId = :raceId and RankInRace > 0 order by RankInRace ASC", nativeQuery = true)
+	List<Player> getFinishResult(@Param("raceId") int raceId);
+	
+	@Query(value = "SELECT * FROM player where RaceId = :raceId where TravelTime > 0 order by TravelTime ASC", nativeQuery = true)
 	List<Player> getRaceFinishedParticipants(@Param("raceId") int raceId);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO Player(UserId, RaceId) VALUES(:userId,:raceId)", nativeQuery = true)
+	@Query(value = "INSERT INTO player(UserId, RaceId) VALUES(:userId,:raceId)", nativeQuery = true)
 	void playerRegister(@Param("userId") int userId, @Param("raceId") int raceId);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM Player where userId = :userId and raceId = :raceId", nativeQuery = true)
+	@Query(value = "DELETE FROM player where UserId = :userId and RaceId = :raceId", nativeQuery = true)
 	void cancelRegister(@Param("userId") int userId, @Param("raceId") int raceId);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE Player set TravelTime = ?1, TravelDistance = ?2 where UserId = ?3 and RaceId = ?4", nativeQuery = true)
+	@Query(value = "UPDATE player set TravelTime = ?1, TravelDistance = ?2 where UserId = ?3 and RaceId = ?4", nativeQuery = true)
 	void sendResult(double travelTime, double travelDistance, int userId, int raceId );
 	
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE Player set RankInRace = :rankInRace where UserId = :userId and RaceId = :raceId", nativeQuery = true)
+	@Query(value = "UPDATE player set RankInRace = :rankInRace where UserId = :userId and RaceId = :raceId", nativeQuery = true)
 	void updateRanking(@Param("rankInRace") int rankInRace, @Param("userId") int userId, @Param("raceId") int raceId);
 }

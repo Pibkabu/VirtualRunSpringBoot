@@ -11,19 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.model.UserAccount;
 
 public interface UserAccountRespository extends JpaRepository<UserAccount, Integer>{
-	@Query(value = "SELECT * FROM UserAccount", nativeQuery = true)
+	@Query(value = "SELECT * FROM useraccount", nativeQuery = true)
 	List<UserAccount> getAllUserAccountINeed();
 	
-	@Query(value = "SELECT * FROM UserAccount where Email = :email", nativeQuery = true)
+	@Query(value = "SELECT * FROM useraccount where Email = :email", nativeQuery = true)
 	UserAccount getUserAccountByEmail(@Param("email") String email);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO UserAccount(Email, UserPassword) VALUES(:email,:password)", nativeQuery = true)
+	@Query(value = "INSERT INTO useraccount(Email, UserPassword) VALUES(:email,:password)", nativeQuery = true)
 	void addAnotherUserAccount(@Param("email") String email, @Param("password") String password);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO UserAccount(Email, UserPassword) VALUES(:email,:password)", nativeQuery = true)
+	@Query(value = "INSERT INTO useraccount(Email, UserPassword) VALUES(:email,:password)", nativeQuery = true)
 	UserAccount addAnotherUserAccount2(@Param("email") String email, @Param("password") String password);
 }

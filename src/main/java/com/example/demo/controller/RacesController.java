@@ -60,28 +60,40 @@ public class RacesController {
 		return new RacesListDAO(races);
 	}
 	
+	@GetMapping("/races/ended/all")
+	public RacesListDAO getEndedRaces() {
+		List<Race> races = racesRespository.getAllEndedRaces();
+		if(races == null) {
+			races = new ArrayList<Race>();
+		}
+		return new RacesListDAO(races);
+	}
+	
 	@RequestMapping(value = "/races/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public @ResponseBody Race createRace(String raceJson1, String userId) {
 		Gson gson = new Gson();
 		Race race = gson.fromJson(raceJson1, Race.class);
 		String imageString = race.getRaceImage();
 		race.setRaceImage("");
-		racesRespository.save(race);
-		hostRespository.addHosting(Integer.valueOf(userId), race.getRaceId());
+		//racesRespository.save(race);
+		racesRespository.addRace(race.getStartTime(), race.getEndTime(), race.getName(), race.getDistance(), race.getRegulation(), race.getDescription() , "");
+		hostRespository.addHosting(Integer.valueOf(userId), Integer.valueOf(racesRespository.getLastInserted()));
 		try{
 			String imageName = "Race" + race.getRaceId() + ".jpg";
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\quynh\\eclipse-workspace\\FirstRestFulService\\image_race\\" + imageName);
+			//FileOutputStream fos = new FileOutputStream("C:\\Users\\quynh\\eclipse-workspace\\FirstRestFulService\\image_race\\" + imageName);
+			FileOutputStream fos = new FileOutputStream("image_race\\" + imageName);
 			byte byteArray[] = Base64.decodeBase64(imageString);
 			fos.write(byteArray);
 			fos.close();
-			racesRespository.editRaceImage("http://192.168.43.195:8080/image_race/" + imageName, race.getRaceId());
+			racesRespository.editRaceImage("https://virtualrace.herokuapp.com/image_race/" + imageName, race.getRaceId());
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
 		return race;
 	}
-	
+
+
 	@RequestMapping(value = "/races/edit", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public @ResponseBody Race editRaceInfo(String raceJson) {
 		Gson gson = new Gson();

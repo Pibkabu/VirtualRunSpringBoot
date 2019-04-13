@@ -13,26 +13,26 @@ import com.example.demo.model.UserHost;
 
 public interface HostingRespository extends JpaRepository<UserHost, UserAndRaceMaped>{
 	
-	@Query(value = "SELECT * FROM UserHost where userId = :userId", nativeQuery = true)
+	@Query(value = "SELECT * FROM userhost where UserId = :userId", nativeQuery = true)
 	List<UserHost> getRacesUserHosting(@Param("userId") int userId);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO UserHost values(:userId, :raceId)", nativeQuery = true)
+	@Query(value = "INSERT INTO userhost values(:userId, :raceId)", nativeQuery = true)
 	void addHosting(@Param("userId") int userId, @Param("raceId") int raceId);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE from UserHost where RaceId = :raceId", nativeQuery = true)
+	@Query(value = "DELETE from userhost where RaceId = :raceId", nativeQuery = true)
 	void deleteHosting(@Param("raceId") int raceId);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE from Player where RaceId = :raceId", nativeQuery = true)
+	@Query(value = "DELETE from player where RaceId = :raceId", nativeQuery = true)
 	void deleteParticipants(@Param("raceId") int raceId);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE from Race where RaceId = :raceId", nativeQuery = true)
+	@Query(value = "DELETE from race where RaceId = :raceId", nativeQuery = true)
 	void deleteRace(@Param("raceId") int raceId);
 }

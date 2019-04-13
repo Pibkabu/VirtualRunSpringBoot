@@ -12,16 +12,16 @@ import com.example.demo.model.UserProfile;
 
 public interface UserProfileRespository extends JpaRepository<UserProfile, Integer>{
 	
-	@Query(value = "SELECT * FROM UserProfile where userId = :id", nativeQuery = true)
+	@Query(value = "SELECT * FROM userprofile where UserId = :id", nativeQuery = true)
 	UserProfile getUserProfileWithId(@Param("id") int id);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO UserProfile VALUE(?1,?2,?3,?4,?5,?6,?7,?8)", nativeQuery = true)
+	@Query(value = "INSERT INTO userprofile VALUE(?1,?2,?3,?4,?5,?6,?7,?8)", nativeQuery = true)
 	void addUserProfile(int userid, String displayname, String firstname, String lastname, Timestamp dob, boolean gender, String phone, String address);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE UserProfile SET displayName = ?1, firstName = ?2, lastName = ?3, DOB = ?4, gender = ?5, phone = ?6, address = ?7 where userId = ?8", nativeQuery = true)
+	@Query(value = "UPDATE userprofile SET DisplayName = ?1, FirstName = ?2, LastName = ?3, DOB = ?4, Gender = ?5, Phone = ?6, Address = ?7 where UserId = ?8", nativeQuery = true)
 	void updateUserProfile(String displayname, String firstname, String lastname, Timestamp dob, boolean gender, String phone, String address, int userid);
 }

@@ -8,6 +8,6 @@ import com.example.demo.model.DonateAccount;
 
 public interface DonateAccountRepositpry extends JpaRepository<DonateAccount, Integer>{
 	
-	@Query(value = "SELECT * FROM DonateAccount where raceId = :raceId", nativeQuery = true)
+	@Query(value = "SELECT * FROM donateaccount where RaceId = :raceId", nativeQuery = true)
 	DonateAccount getDonateAccountOfRace(@Param("raceId") int raceId);
 }
