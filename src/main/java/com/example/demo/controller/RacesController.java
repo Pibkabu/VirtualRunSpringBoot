@@ -75,17 +75,19 @@ public class RacesController {
 		Race race = gson.fromJson(raceJson1, Race.class);
 		String imageString = race.getRaceImage();
 		race.setRaceImage("");
-		//racesRespository.save(race);
-		racesRespository.addRace(race.getStartTime(), race.getEndTime(), race.getName(), race.getDistance(), race.getRegulation(), race.getDescription() , "");
-		hostRespository.addHosting(Integer.valueOf(userId), Integer.valueOf(racesRespository.getLastInserted()));
+		racesRespository.save(race);
+		hostRespository.addHosting(Integer.valueOf(userId), race.getRaceId());
+		//racesRespository.addRace(race.getStartTime(), race.getEndTime(), race.getName(), race.getDistance(), race.getRegulation(), race.getDescription() , race.getRacePassword());
+		//hostRespository.addHosting(Integer.valueOf(userId), Integer.valueOf(racesRespository.getLastInserted()));
 		try{
 			String imageName = "Race" + race.getRaceId() + ".jpg";
-			//FileOutputStream fos = new FileOutputStream("C:\\Users\\quynh\\eclipse-workspace\\FirstRestFulService\\image_race\\" + imageName);
-			FileOutputStream fos = new FileOutputStream("image_race\\" + imageName);
+			FileOutputStream fos = new FileOutputStream("C:\\Users\\quynh\\eclipse-workspace\\FirstRestFulService\\image_race\\" + imageName);
+			//FileOutputStream fos = new FileOutputStream("image_race\\" + imageName);
 			byte byteArray[] = Base64.decodeBase64(imageString);
 			fos.write(byteArray);
-			fos.close();
-			racesRespository.editRaceImage("https://virtualrace.herokuapp.com/image_race/" + imageName, race.getRaceId());
+			fos.close(); 
+			//racesRespository.editRaceImage("https://virtualrace.herokuapp.com/image_race/" + imageName, race.getRaceId());
+			racesRespository.editRaceImage("http://192.168.43.195:8080/image_race/" + imageName, race.getRaceId());
 		}
 		catch(Exception e){
 			e.printStackTrace();

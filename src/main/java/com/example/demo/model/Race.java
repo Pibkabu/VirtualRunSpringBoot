@@ -33,6 +33,8 @@ public class Race {
     
     private String raceImage;
     
+    private String racePassword;
+    
 	public Race() {
 		
 	}
@@ -131,7 +133,14 @@ public class Race {
 	public void setRaceImage(String raceImage) {
 		this.raceImage = raceImage;
 	}
-    
-	
-    
+
+
+	public String getRacePassword() {
+		return racePassword;
+	}
+
+
+	public void setRacePassword(String racePassword) {
+		this.racePassword = racePassword;
+	}
 }
