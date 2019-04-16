@@ -23,6 +23,9 @@ public class DonationDAO {
 	    private UserProfile profile;
 	    private Donation donation;
 	    
+		public DonationInfo() {
+		}
+
 		public DonationInfo(UserProfile profile, Donation donation) {
 			this.profile = profile;
 			this.donation = donation;
