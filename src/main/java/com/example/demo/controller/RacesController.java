@@ -51,6 +51,12 @@ public class RacesController {
 		return new RacesListDAO(races);
 	}
 	
+	@GetMapping("/races/search")
+	public RacesListDAO searchRacesWithName(@RequestParam String name) {
+		List<Race> races = racesRespository.getRacesWithName(name);
+		return new RacesListDAO(races);
+	}
+	
 	@GetMapping("/races/ongoing")
 	public RacesListDAO getOngoingRaces() {
 		List<Race> races = racesRespository.getOngoingRaces();

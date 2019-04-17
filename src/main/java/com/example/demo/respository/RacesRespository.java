@@ -28,6 +28,9 @@ public interface RacesRespository extends JpaRepository<Race, Integer>{
 	@Query(value = "SELECT * FROM race where EndTime < CURDATE() order by RaceId DESC", nativeQuery = true)
 	List<Race> getAllEndedRaces();
 	
+	@Query(value = "SELECT * from race where RaceName like '%:name%'", nativeQuery = true)
+	List<Race> getRacesWithName(@Param("name") String name);
+	
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE race SET RaceImage = ?1 where RaceId = ?2", nativeQuery = true)
