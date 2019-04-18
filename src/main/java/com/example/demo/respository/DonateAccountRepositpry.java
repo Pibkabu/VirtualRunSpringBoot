@@ -17,4 +17,9 @@ public interface DonateAccountRepositpry extends JpaRepository<DonateAccount, In
 	@Modifying
 	@Query(value = "INSERT INTO donateaccount(RaceId, AccountNumber, AccountName) VALUES(:raceId, :number, :name)", nativeQuery = true)
 	void addDonateAccount(@Param("raceId") int raceId, @Param("number") String accountNumber, @Param("name") String accountName);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "DELETE from donateaccount where RaceId = :raceId", nativeQuery = true)
+	void deleteDonateAccount(@Param("raceId") int raceId);
 }

@@ -19,6 +19,7 @@ import com.example.demo.dao.RacesListDAO;
 import com.example.demo.model.Race;
 import com.example.demo.model.UserAndRaceMaped;
 import com.example.demo.model.UserHost;
+import com.example.demo.respository.DonateAccountRepositpry;
 import com.example.demo.respository.HostingRespository;
 import com.example.demo.respository.RacesRespository;
 
@@ -30,6 +31,9 @@ public class HostingController {
 	
 	@Autowired
 	RacesRespository racesRespository;
+	
+	@Autowired
+	DonateAccountRepositpry accountRepository;
 	
 	@GetMapping("/hosting/ongoing")
 	public RacesListDAO getOngoingRacesUserHosting(@RequestParam int userId) {
@@ -82,6 +86,7 @@ public class HostingController {
 		int id = Integer.valueOf(raceId);
 		hostingRespository.deleteParticipants(id);
 		hostingRespository.deleteHosting(id);
+		accountRepository.deleteDonateAccount(id);
 		hostingRespository.deleteRace(id);
 		UserHost host = new UserHost();
 		host.setUserAndRaceMaped(new UserAndRaceMaped());
