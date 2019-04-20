@@ -14,5 +14,6 @@ public class MyWebConfiguration implements WebMvcConfigurer{
 //		registry.addResourceHandler("/image_user/**").addResourceLocations("file://" + System.getProperty("user.dir") + "/src/main/image_user/");
 		
 		registry.addResourceHandler("/image_race/**").addResourceLocations("file:image_race/");
+		registry.addResourceHandler("/image_user/**").addResourceLocations("file:image_user/");
 	}
 }

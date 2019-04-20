@@ -15,6 +15,7 @@ public class UserProfile {
 	private boolean gender;
 	private String phone;
 	private String address;
+	private String userImage;
 	
 	public UserProfile() {
 		super();
@@ -79,8 +80,10 @@ public class UserProfile {
 	public void setDob(Timestamp dob) {
 		this.dob = dob;
 	}
-	
-	
-	
-	
+	public String getUserImage() {
+		return userImage;
+	}
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
 }

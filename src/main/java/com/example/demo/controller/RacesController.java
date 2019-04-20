@@ -51,9 +51,11 @@ public class RacesController {
 		return new RacesListDAO(races);
 	}
 	
-	@GetMapping("/races/search")
-	public RacesListDAO searchRacesWithName(@RequestParam String name) {
-		List<Race> races = racesRespository.getRacesWithName(name);
+	@RequestMapping(value = "/races/search", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public @ResponseBody RacesListDAO searchRacesWithName(String name) {
+		Gson gson = new Gson();
+		Race race = gson.fromJson(name, Race.class);
+		List<Race> races = racesRespository.getRacesWithName(race.getName());
 		return new RacesListDAO(races);
 	}
 	

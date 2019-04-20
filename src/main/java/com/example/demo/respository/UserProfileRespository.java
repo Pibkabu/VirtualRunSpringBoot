@@ -22,6 +22,6 @@ public interface UserProfileRespository extends JpaRepository<UserProfile, Integ
 	
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE userprofile SET DisplayName = ?1, FirstName = ?2, LastName = ?3, DOB = ?4, Gender = ?5, Phone = ?6, Address = ?7 where UserId = ?8", nativeQuery = true)
-	void updateUserProfile(String displayname, String firstname, String lastname, Timestamp dob, boolean gender, String phone, String address, int userid);
+	@Query(value = "UPDATE userprofile SET DisplayName = ?1, FirstName = ?2, LastName = ?3, DOB = ?4, Gender = ?5, Phone = ?6, Address = ?7, UserImage = ?8 where UserId = ?9", nativeQuery = true)
+	void updateUserProfile(String displayname, String firstname, String lastname, Timestamp dob, boolean gender, String phone, String address, String userImage, int userid);
 }
