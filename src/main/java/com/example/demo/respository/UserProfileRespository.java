@@ -1,6 +1,7 @@
 package com.example.demo.respository;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.model.UserProfile;
 
 public interface UserProfileRespository extends JpaRepository<UserProfile, Integer>{
+	
+	@Query(value = "SELECT * FROM userprofile", nativeQuery = true)
+	List<UserProfile> getAllUserProfile();
 	
 	@Query(value = "SELECT * FROM userprofile where UserId = :id", nativeQuery = true)
 	UserProfile getUserProfileWithId(@Param("id") int id);

@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dao.UserProfileDAO;
 import com.example.demo.model.UserProfile;
 import com.example.demo.respository.UserProfileRespository;
 import com.google.gson.Gson;
@@ -20,6 +23,15 @@ import com.google.gson.Gson;
 public class UserProfileController {
 	@Autowired
 	UserProfileRespository userProfileRespository;
+	
+	@GetMapping("/profile")
+	public UserProfileDAO getAllUserProfile() {
+		List<UserProfile> profiles = userProfileRespository.getAllUserProfile();
+		if(profiles == null) {
+			profiles = new ArrayList<>();
+		}
+		return new UserProfileDAO(profiles);
+	}
 	
 	@GetMapping("/profile/id")
 	public UserProfile getUserProfileWithId(@RequestParam int id) {
