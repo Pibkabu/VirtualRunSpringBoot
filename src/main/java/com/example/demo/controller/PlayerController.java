@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dao.PlayerListDAO;
 import com.example.demo.dao.RacesListDAO;
+import com.example.demo.dao.UserProfileDAO;
 import com.example.demo.model.Player;
 import com.example.demo.model.Race;
+import com.example.demo.model.UserProfile;
 import com.example.demo.respository.PlayerRespository;
 import com.example.demo.respository.RacesRespository;
+import com.example.demo.respository.UserProfileRespository;
 import com.google.gson.Gson;
 
 @RestController
@@ -28,10 +31,26 @@ public class PlayerController {
 	@Autowired
 	RacesRespository raceRespository;
 	
+	@Autowired
+	UserProfileRespository userProfileRespository;
+	
 	@GetMapping("/players")
 	public PlayerListDAO getAllPlayers() {
 		List<Player> players = playerRespository.getAllPlayers();
 		return new PlayerListDAO(players);
+	}
+	
+	@GetMapping("/players/profile")
+	public UserProfileDAO getPlayerProfile(@RequestParam int raceId) {
+		List<Player> players = playerRespository.getRaceParticipants(raceId);
+		List<UserProfile> profiles = new ArrayList<>();
+		
+		for (Player player : players) {
+			UserProfile profile = userProfileRespository.getUserProfileWithId(player.getUserAndRaceMaped().getUserId());
+			profiles.add(profile);
+		}
+		
+		return new UserProfileDAO(profiles);
 	}
 	
 	@GetMapping("/players/id")

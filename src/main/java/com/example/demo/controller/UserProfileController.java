@@ -47,7 +47,7 @@ public class UserProfileController {
 		Gson gson = new Gson();
 		UserProfile profile = new UserProfile();
 		profile = gson.fromJson(profileJson, UserProfile.class);
-		userProfileRespository.addUserProfile(profile.getUserId(), profile.getDisplayName(), profile.getFirstName(), profile.getLastName(), profile.getDob(), profile.isGender(), profile.getPhone(), profile.getAddress());
+		userProfileRespository.addUserProfile(profile.getUserId(), profile.getDisplayName(), profile.getFirstName(), profile.getLastName(), profile.getDob(), profile.isGender(), profile.getPhone(), profile.getAddress(),"");
 		return profile;
 	}
 	
@@ -56,20 +56,23 @@ public class UserProfileController {
 		Gson gson = new Gson();
 		UserProfile profile = new UserProfile();
 		profile = gson.fromJson(profileJson, UserProfile.class);
-		String userImage = profile.getUserImage();
-		if(!userImage.equalsIgnoreCase("")) {
-			try{
-				String imageName = "User" + profile.getUserId() + ".jpg";
-				FileOutputStream fos = new FileOutputStream("C:\\Users\\quynh\\eclipse-workspace\\FirstRestFulService\\image_user\\" + imageName);
-				byte byteArray[] = Base64.decodeBase64(userImage);
-				fos.write(byteArray);
-				fos.close(); 
-				profile.setUserImage("http://192.168.43.195:8080/image_user/" + imageName);
+		UserProfile comparedProfile = userProfileRespository.getUserProfileWithId(profile.getUserId());
+		if(!profile.getUserImage().equals(comparedProfile.getUserImage())) {
+			String userImage = profile.getUserImage();
+			if(!userImage.equalsIgnoreCase("")) {
+				try{
+					String imageName = "User" + profile.getUserId() + ".jpg";
+					FileOutputStream fos = new FileOutputStream("C:\\Users\\quynh\\eclipse-workspace\\FirstRestFulService\\image_user\\" + imageName);
+					byte byteArray[] = Base64.decodeBase64(userImage);
+					fos.write(byteArray);
+					fos.close(); 
+					profile.setUserImage("http://192.168.43.195:8080/image_user/" + imageName);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
 			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-		}
+		}	
 		userProfileRespository.updateUserProfile(profile.getDisplayName(), profile.getFirstName(), 
 				profile.getLastName(), profile.getDob(), profile.isGender(), 
 				profile.getPhone(), profile.getAddress(), profile.getUserImage(), profile.getUserId());

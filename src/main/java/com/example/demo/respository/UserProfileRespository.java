@@ -21,8 +21,8 @@ public interface UserProfileRespository extends JpaRepository<UserProfile, Integ
 	
 	@Transactional
 	@Modifying
-	@Query(value = "INSERT INTO userprofile VALUE(?1,?2,?3,?4,?5,?6,?7,?8)", nativeQuery = true)
-	void addUserProfile(int userid, String displayname, String firstname, String lastname, Timestamp dob, boolean gender, String phone, String address);
+	@Query(value = "INSERT INTO userprofile(UserId, DisplayName, FirstName, LastName, DOB, Gender, Phone, Address, UserImage) VALUE(?1,?2,?3,?4,?5,?6,?7,?8,?9)", nativeQuery = true)
+	void addUserProfile(int userid, String displayname, String firstname, String lastname, Timestamp dob, boolean gender, String phone, String address, String userImage);
 	
 	@Transactional
 	@Modifying
