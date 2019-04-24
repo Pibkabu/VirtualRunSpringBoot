@@ -73,9 +73,11 @@ public class UserProfileController {
 				}
 			}
 		}	
+		
 		userProfileRespository.updateUserProfile(profile.getDisplayName(), profile.getFirstName(), 
 				profile.getLastName(), profile.getDob(), profile.isGender(), 
 				profile.getPhone(), profile.getAddress(), profile.getUserImage(), profile.getUserId());
+		
 		return profile;
 	}
 }

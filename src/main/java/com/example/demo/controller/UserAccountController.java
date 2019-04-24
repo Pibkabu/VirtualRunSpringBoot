@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dao.UserAccountDAO;
 import com.example.demo.model.UserAccount;
 import com.example.demo.respository.UserAccountRespository;
+import com.google.gson.Gson;
 
 @RestController
 public class UserAccountController {
@@ -61,6 +62,18 @@ public class UserAccountController {
 			if(!account.getPassword().equals(password)) {
 				return new UserAccount();
 			}
+		}
+		return account;
+	}
+	
+	@RequestMapping(value = "/user/changepassword", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public @ResponseBody UserAccount changePassword(String accountString) {
+		Gson gson = new Gson();
+		UserAccount account = gson.fromJson(accountString, UserAccount.class);
+		if(account == null) {
+			return new UserAccount();
+		}else {
+			userRespository.changePassword(account.getEmail(), account.getPassword());
 		}
 		return account;
 	}

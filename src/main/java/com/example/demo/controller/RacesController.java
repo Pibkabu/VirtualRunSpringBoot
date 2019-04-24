@@ -17,7 +17,6 @@ import com.example.demo.dao.RacesListDAO;
 import com.example.demo.model.Race;
 import com.example.demo.respository.HostingRespository;
 import com.example.demo.respository.RacesRespository;
-import com.example.demo.respository.UserProfileRespository;
 import com.google.gson.Gson;
 
 @RestController
@@ -27,9 +26,6 @@ public class RacesController {
 	 
 	@Autowired
 	HostingRespository hostRespository;
-	
-	@Autowired
-	UserProfileRespository userProfileRespository;
 	
 	@GetMapping("/races")
 	public RacesListDAO getAllRaces() {

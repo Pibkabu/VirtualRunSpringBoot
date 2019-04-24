@@ -13,7 +13,7 @@ import com.example.demo.model.Race;
 
 public interface RacesRespository extends JpaRepository<Race, Integer>{
 	
-	@Query(value = "SELECT * FROM race", nativeQuery = true)
+	@Query(value = "SELECT * FROM race order by RaceId DESC", nativeQuery = true)
 	List<Race> getAllRaces();
 	
 	@Query(value = "SELECT * FROM race where RaceId = :id", nativeQuery = true)
