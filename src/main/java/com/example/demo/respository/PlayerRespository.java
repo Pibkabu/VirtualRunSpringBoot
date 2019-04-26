@@ -28,7 +28,7 @@ public interface PlayerRespository extends JpaRepository<Player, UserAndRaceMape
 	@Query(value = "SELECT * FROM player where RaceId = :raceId and RankInRace > 0 order by RankInRace ASC", nativeQuery = true)
 	List<Player> getFinishResult(@Param("raceId") int raceId);
 	
-	@Query(value = "SELECT * FROM player where RaceId = :raceId where TravelTime > 0 order by TravelTime ASC", nativeQuery = true)
+	@Query(value = "SELECT * FROM player where RaceId = :raceId and TravelTime > 0 order by TravelTime ASC", nativeQuery = true)
 	List<Player> getRaceFinishedParticipants(@Param("raceId") int raceId);
 	
 	@Transactional
