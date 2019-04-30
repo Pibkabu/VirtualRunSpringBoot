@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.model.Donation;
 
 public interface DonationRepository extends JpaRepository<Donation, Integer>{
-	@Query(value = "SELECT * FROM donation where RaceId = :raceId order by DonationId DESC", nativeQuery = true)
+	@Query(value = "SELECT * FROM donation where RaceId = :raceId", nativeQuery = true)
 	List<Donation> getRaceDonation(@Param("raceId") int raceId);
 	
 	@Transactional
