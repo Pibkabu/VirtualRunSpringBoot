@@ -43,8 +43,8 @@ public class DonationController {
 				UserProfile profile = profileRepository.getUserProfileWithId(donation.getUserId());
 				infos.add(new DonationInfo(profile, donation));
 			}
-			dao.setInfos(infos);
 		}
+		dao.setInfos(infos);
 		return dao;
 	}
 	
